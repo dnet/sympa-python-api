@@ -27,11 +27,11 @@ class Sympa(object):
             raise RuntimeError('Authentication failure')
         self.post_command(action='set_lang', lang='en_US')
         self.__populate_lists(login)
-    
+
     def log_out(self):
         if self.logged_in():
             self.post_command(action='logout')
-    
+
     def __populate_lists(self, page):
         root = get_page_root(page)
         links = root.xpath('/html/body/div/div/div/ul[@class = "listenum"]/li/a/@href')
