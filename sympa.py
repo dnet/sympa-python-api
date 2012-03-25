@@ -1,14 +1,9 @@
 #!/usr/bin/env python
 
 import requests
+import re
 from datetime import datetime
 from lxml import etree
-try:
-    from cStringIO import StringIO
-except ImportError:
-    from StringIO import StringIO
-
-HTML_PARSER = etree.HTMLParser()
 
 class Sympa(object):
     def __init__(self, url):
@@ -49,8 +44,9 @@ class Sympa(object):
 def page_logged_in(page):
     return 'action_logout' in page.text
 
+ENCODING_RE = re.compile(r'<meta[^>]+>| encoding="[^"]+"')
 def get_page_root(page):
-    return etree.parse(StringIO(page.content), HTML_PARSER).getroot()
+    return etree.HTML(ENCODING_RE.sub('', page.text))
 
 LISTDIR_XPATH = etree.XPath('/html/body/div/div/div[@id="Paint"]/div[@class="ContentBlock"]/table/tr')
 class MailingList(object):
