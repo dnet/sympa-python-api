@@ -25,6 +25,14 @@ Also, the `sympafs` module can be used to mount the shared files of mailing list
 	...
 	$ fusermount -u /tmp/sympa
 
+Known limitations (TODO)
+------------------------
+
+ - Shared files access is read-only
+ - SympaFS caching is naive: freshness is not checked, and there's no garbage collection
+ - The result of a timed out session is unkown
+ - The contents of the page is not checked for error messages
+
 License
 -------
 
