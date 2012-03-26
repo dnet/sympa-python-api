@@ -8,7 +8,7 @@ from lxml import etree
 class Sympa(object):
     def __init__(self, url):
         self.url = url
-        self.cookies = {}
+        self.cookies = dict(sympalang='en_US')
         self.lists = []
 
     def logged_in(self):
@@ -20,7 +20,6 @@ class Sympa(object):
         login = self.post_command(action='login', email=email, passwd=passwd)
         if not page_logged_in(login):
             raise RuntimeError('Authentication failure')
-        self.post_command(action='set_lang', lang='en_US')
         self.__populate_lists(login)
 
     def log_out(self):
