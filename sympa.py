@@ -9,7 +9,7 @@ class Sympa(object):
     def __init__(self, url):
         self.url = url
         self.cookies = dict(sympalang='en_US')
-        self.lists = []
+        self.lists = {}
 
     def logged_in(self):
         return page_logged_in(self.get_page())
