@@ -15,8 +15,6 @@ class Sympa(object):
         return page_logged_in(self.get_page())
 
     def log_in(self, email, passwd):
-        if self.logged_in():
-            return
         login = self.post_command(action='login', email=email, passwd=passwd)
         if not page_logged_in(login):
             raise RuntimeError('Authentication failure')
