@@ -35,7 +35,8 @@ class Sympa(object):
         return page
 
     def get_page(self, *params):
-        return requests.get('{0}/{1}'.format(self.url, '/'.join(params)), cookies=self.cookies)
+        uri = '{0}/{1}'.format(self.url, '/'.join(params))
+        return requests.get(uri, cookies=self.cookies)
 
 def page_logged_in(page):
     return 'action_logout' in page.text
@@ -44,7 +45,8 @@ ENCODING_RE = re.compile(r'<meta[^>]+>| encoding="[^"]+"')
 def get_page_root(page):
     return etree.HTML(ENCODING_RE.sub('', page.text))
 
-LISTDIR_XPATH = etree.XPath('/html/body/div/div/div[@id="Paint"]/div[@class="ContentBlock"]/table/tr')
+LISTDIR_XPATH = etree.XPath(
+    '/html/body/div/div/div[@id="Paint"]/div[@class="ContentBlock"]/table/tr')
 class MailingList(object):
     def __init__(self, sympa, name):
         self.sympa = sympa
@@ -90,7 +92,8 @@ class File(Entry):
         self.size = size
 
     def __repr__(self):
-        return '<File "{0}" size={1} updated="{2}">'.format(self.name, self.size, self.updated)
+        return '<File "{0}" size={1} updated="{2}">'.format(
+                self.name, self.size, self.updated)
 
     def is_dir(self):
         return False
