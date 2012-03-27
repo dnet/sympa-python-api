@@ -23,9 +23,11 @@ class Sympa(object):
     def log_out(self):
         self.post_command(action='logout')
 
+    LISTS_XPATH = etree.XPath(
+            '/html/body/div/div/div/ul[@class = "listenum"]/li/a/@href')
     def __populate_lists(self, page):
         root = get_page_root(page)
-        links = root.xpath('/html/body/div/div/div/ul[@class = "listenum"]/li/a/@href')
+        links = self.LISTS_XPATH(root)
         names = (link.rsplit('/', 1)[1] for link in links)
         self.lists = dict((name, MailingList(self, name)) for name in names)
 
