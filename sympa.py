@@ -21,8 +21,7 @@ class Sympa(object):
         self.__populate_lists(login)
 
     def log_out(self):
-        if self.logged_in():
-            self.post_command(action='logout')
+        self.post_command(action='logout')
 
     def __populate_lists(self, page):
         root = get_page_root(page)
