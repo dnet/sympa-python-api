@@ -73,7 +73,7 @@ def row2entry(row):
     timetext = ''.join(TD_XPATH(row, pos=4)).strip()
     updated = datetime.strptime(timetext, TIME_FORMAT).date()
     try:
-        size = int(''.join(TD_XPATH(row, pos=3)).replace('.', '').strip())
+        size = int(''.join(TD_XPATH(row, pos=3)).replace('.', ''))
         entry = File(name, updated, size)
     except ValueError:
         entry = Directory(name, updated)
