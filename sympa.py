@@ -8,7 +8,7 @@ from lxml import etree
 class Sympa(object):
     def __init__(self, url):
         self.url = url
-        self.cookies = dict(sympalang='en_US')
+        self.session = requests.session(cookies=dict(sympalang='en_US'))
         self.lists = {}
 
     def logged_in(self):
@@ -32,13 +32,12 @@ class Sympa(object):
         self.lists = dict((name, MailingList(self, name)) for name in names)
 
     def post_command(self, **kwargs):
-        page = requests.post(self.url, data=kwargs, cookies=self.cookies)
-        self.cookies = page.cookies
+        page = self.session.post(self.url, data=kwargs)
         return page
 
     def get_page(self, *params):
         uri = '{0}/{1}'.format(self.url, '/'.join(params))
-        return requests.get(uri, cookies=self.cookies)
+        return self.session.get(uri)
 
 def page_logged_in(page):
     return 'action_logout' in page.text
