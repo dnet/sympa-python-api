@@ -65,13 +65,13 @@ class MailingList(object):
         page = self.sympa.get_page('d_read', self.name, path)
         return page.raw
 
-TIME_FORMAT = '%d %b %Y'
+TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 NAME_XPATH = etree.XPath('td[position() = 1]/a/text()')
 TD_XPATH = etree.XPath('td[position() = $pos]/text()')
 def row2entry(row):
     name = ''.join(NAME_XPATH(row)).strip()
     timetext = ''.join(TD_XPATH(row, pos=4)).strip()
-    updated = datetime.strptime(timetext, TIME_FORMAT).date()
+    updated = datetime.strptime(timetext, TIME_FORMAT)
     try:
         size = int(''.join(TD_XPATH(row, pos=3)).replace('.', ''))
         entry = File(name, updated, size)
