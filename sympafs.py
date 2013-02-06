@@ -81,11 +81,11 @@ def entry2attr(entry):
             st_mtime=t, st_atime=t, st_size=s)
 
 def main():
-    from sys import argv, exit, stderr
+    from sys import argv, stderr
     if len(argv) != 5:
         print(('Usage: {0} <URL> <e-mail address> <mailing list> '
             '<mountpoint>').format(argv[0]), file=stderr)
-        exit(1)
+        raise SystemExit(1)
 
     from getpass import getpass
     passwd = getpass()
